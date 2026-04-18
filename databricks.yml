@@ -1,0 +1,76 @@
+bundle:
+  name: agent_langgraph
+
+resources:
+  apps:
+    agent_langgraph:
+      name: "agent-langgraph-genie-ka-mc"
+      description: "LangGraph agent application"
+      source_code_path: ./
+      config:
+        command: ["uv", "run", "start-app"]
+        env:
+          - name: MLFLOW_TRACKING_URI
+            value: "databricks"
+          - name: MLFLOW_REGISTRY_URI
+            value: "databricks-uc"
+          - name: API_PROXY
+            value: "http://localhost:8000/invocations"
+          - name: CHAT_APP_PORT
+            value: "3000"
+          - name: CHAT_PROXY_TIMEOUT_SECONDS
+            value: "300"
+          - name: MLFLOW_EXPERIMENT_ID
+            value_from: "experiment"
+
+      # Resources which this app has access to
+      resources:
+        - name: 'experiment'
+          experiment:
+            experiment_id: "402540932471981"
+            permission: 'CAN_MANAGE'
+
+        # Genie Space 1
+        - name: 'genie_space_1'
+          genie_space:
+            name: 'Genie Space 1'
+            space_id: '01f134fb5f9b1dd78966fd2bf47f26a2'
+            permission: 'CAN_RUN'
+
+        # Genie Space 2
+        # - name: 'genie_space_2'
+        #   genie_space:
+        #     name: 'Genie Space 2'
+        #     space_id: 'REPLACE_GENIE_SPACE_2_ID'
+        #     permission: 'CAN_RUN'
+
+        # Knowledge Assistant endpoint
+        - name: 'ka_endpoint'
+          serving_endpoint:
+            name: 'ka-b3b5b187-endpoint'
+            permission: 'CAN_QUERY'
+
+        # UC Function: get_city_temperature
+        - name: 'get_city_temperature'
+          uc_securable:
+            securable_full_name: 'serverless_stable_14ey07_catalog.mc.get_city_temperature'
+            securable_type: 'FUNCTION'
+            permission: 'EXECUTE'
+
+targets:
+  dev:
+    mode: development
+    default: true
+    # workspace:
+    #   host: https://...
+
+  prod:
+    mode: production
+    workspace:
+      host: https://fevm-serverless-stable-14ey07.cloud.databricks.com
+      profile: fevm
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    resources:
+      apps:
+        agent_langgraph:
+          name: agent-langgraph-genie-ka-mc
