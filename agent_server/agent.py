@@ -62,12 +62,19 @@ def init_mcp_client(workspace_client: WorkspaceClient) -> DatabricksMultiServerM
                 url=f"{host_name}/api/2.0/mcp/genie/01f134fb5f9b1dd78966fd2bf47f26a2",
                 workspace_client=workspace_client,
             ),
-            # Genie Space 2
+            # Placeholder for Genie Space 2
             # DatabricksMCPServer(
             #     name="genie-space-2",
-            #     url=f"{host_name}/api/2.0/mcp/genie/REPLACE_GENIE_SPACE_2_ID",
+            #     url=f"{host_name}/api/2.0/mcp/genie/<REPLACE_GENIE_SPACE_2_ID>",
             #     workspace_client=workspace_client,
             # ),
+            # placeholder for vector search index
+            # DatabricksMCPServer(
+            #     name="my-vector-search",
+            #     url=f"{host_name}/api/2.0/mcp/vector-search/<CATALOG>/<SCHEMA>/<INDEX_NAME>",
+            #     workspace_client=workspace_client,
+            # ),
+
             # UC Function: get_city_temperature
             DatabricksMCPServer(
                 name="get-city-temperature",
