@@ -50,6 +50,19 @@ resources:
             name: 'ka-b3b5b187-endpoint'
             permission: 'CAN_QUERY'
 
+        # Placeholder for Knowledge Assistant 2 endpoint
+        # - name: 'ka_endpoint_2'
+        #   serving_endpoint:
+        #     name: '<REPLACE_KA_ENDPOINT_NAME>'
+        #     permission: 'CAN_QUERY'
+
+        # Placeholder for Vector Search Index
+        # - name: 'my_vector_index'
+        #   uc_securable:
+        #     securable_full_name: '<CATALOG>.<SCHEMA>.<INDEX_NAME>'
+        #     securable_type: 'TABLE'
+        #     permission: 'SELECT'
+
         # UC Function: get_city_temperature
         - name: 'get_city_temperature'
           uc_securable:

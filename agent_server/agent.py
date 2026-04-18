@@ -52,6 +52,22 @@ def knowledge_assistant(query: str) -> str:
     return "No answer found."
 
 
+# Placeholder for Knowledge Assistant 2
+# @tool
+# def knowledge_assistant_2(query: str) -> str:
+#     """Search the knowledge base for answers about <DESCRIBE_YOUR_KB_TOPICS>."""
+#     response = sp_workspace_client.api_client.do(
+#         "POST",
+#         "/serving-endpoints/<REPLACE_KA_ENDPOINT_NAME>/invocations",
+#         body={"input": [{"role": "user", "content": query}]},
+#     )
+#     output = response.get("output", [])
+#     for item in output:
+#         if item.get("type") == "message" and item.get("content"):
+#             return "".join(part.get("text", "") for part in item["content"])
+#     return "No answer found."
+
+
 def init_mcp_client(workspace_client: WorkspaceClient) -> DatabricksMultiServerMCPClient:
     host_name = get_databricks_host_from_env()
     return DatabricksMultiServerMCPClient(
@@ -86,7 +102,7 @@ def init_mcp_client(workspace_client: WorkspaceClient) -> DatabricksMultiServerM
 
 
 async def init_agent(workspace_client: Optional[WorkspaceClient] = None):
-    tools = [get_current_time, knowledge_assistant]
+    tools = [get_current_time, knowledge_assistant]  # Add knowledge_assistant_2 here when ready
     mcp_client = init_mcp_client(workspace_client or sp_workspace_client)
     try:
         tools.extend(await mcp_client.get_tools())
